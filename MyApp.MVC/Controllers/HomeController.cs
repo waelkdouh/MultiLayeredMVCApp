@@ -22,7 +22,7 @@ namespace MyApp.MVC.Controllers
                 client.BaseAddress = new Uri("https://localhost:44334");
                 MediaTypeWithQualityHeaderValue contentType =new MediaTypeWithQualityHeaderValue("application/json");
                 client.DefaultRequestHeaders.Accept.Add(contentType);
-                HttpResponseMessage response = client.GetAsync("/api/values").Result;
+                HttpResponseMessage response = client.GetAsync("/api/blogs").Result;
                 string stringData = response.Content.ReadAsStringAsync().Result;
                 List<Blog> data = JsonConvert.DeserializeObject<List<Blog>>(stringData);
                 return View(data);
