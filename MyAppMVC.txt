@@ -1,0 +1,58 @@
+Modify Homecontroller.cs file:
+------------------------------
+ public ActionResult Index()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44334");
+                MediaTypeWithQualityHeaderValue contentType =new MediaTypeWithQualityHeaderValue("application/json");
+                client.DefaultRequestHeaders.Accept.Add(contentType);
+                HttpResponseMessage response = client.GetAsync("/api/values").Result;
+                string stringData = response.Content.ReadAsStringAsync().Result;
+                List<Blog> data = JsonConvert.DeserializeObject<List<Blog>>(stringData);
+                return View(data);
+            }
+        }
+
+
+
+
+
+Modify the index.cshtml file:
+----------------------------
+@model IEnumerable<MyApp.DAL.Models.Blog>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Url)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Url)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.BlogId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.BlogId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.BlogId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

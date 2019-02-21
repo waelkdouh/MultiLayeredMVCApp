@@ -1,0 +1,30 @@
+Add the following two lines to the ConfigureSErvices() method inside startup.cs
+-----------------------------------------------------------------------
+
+var connection = @"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0";
+
+services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
+
+
+Rename Values controller to Blogs Controller
+--------------------------------------------
+
+Modify the valuesconroller.cs file:
+------------------------------------
+ private readonly BloggingContext _context;
+
+        public ValuesController(BloggingContext context)
+        {
+            _context = context;
+        }
+
+        // GET api/values
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Blog>>> Get()
+        {
+            return await _context.Blog.ToListAsync();
+        }
+
+Add Swagger support:
+--------------------
+https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-2.2&tabs=visual-studio

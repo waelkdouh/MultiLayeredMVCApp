@@ -1,0 +1,17 @@
+Add the following to the .csproj file:
+--------------------------------------
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet"
+                           Version="2.0.3" />
+  </ItemGroup>
+  
+  
+Execute the following command on the cmd line:
+-----------------------------------------------
+dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=true;MultipleActiveResultSets=true" "Microsoft.EntityFrameworkCore.SqlServer" --context BloggingContext --output-dir Models
